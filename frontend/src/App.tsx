@@ -43,10 +43,10 @@ function App() {
     }
 
     setIsChecking(true)
-    
+
     // Check if the wallet is in the whitelist
     const normalizedAddress = walletAddress.toLowerCase().trim()
-    const isWhitelisted = whitelist.some(address => 
+    const isWhitelisted = whitelist.some((address: string) =>
       address.toLowerCase() === normalizedAddress
     )
 
@@ -59,7 +59,7 @@ function App() {
       duration: 5000,
       isClosable: true,
     })
-    
+
     setIsChecking(false)
   }
 
