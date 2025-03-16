@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ChakraProvider, Box, VStack, Input, Button, Text, Heading, useToast } from '@chakra-ui/react'
+import { ChakraProvider, Box, VStack, Input, Button, Text, Heading, useToast, Image } from '@chakra-ui/react'
 import AdminPage from './AdminPage'
 import whitelist from './whitelist.json'
 
@@ -108,7 +108,12 @@ function App() {
               alignItems="center"
               overflow="hidden"
             >
-              <Text color="white" fontSize="md">Your artwork will go here</Text>
+              <Image
+                src="/banner_10k.jpeg"
+                alt="The 10K Squad Artwork"
+                objectFit="cover"
+                maxH="100%"
+              />
             </Box>
 
             <Box
