@@ -10,7 +10,7 @@ function AdminPage() {
     const toast = useToast();
 
     // The password is hardcoded here - in a real app, you'd use a more secure approach
-    const correctPassword = "10kSquad2024";
+    const correctPassword = "10kSquad2025";
 
     const handleLogin = () => {
         setIsLoading(true);

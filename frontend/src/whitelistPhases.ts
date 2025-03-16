@@ -1,8 +1,8 @@
 import whitelist from './whitelist.json';
 
-// Define the two phases
-export const PHASE_1_SIZE = 4995;
-export const PHASE_2_SIZE = whitelist.length - PHASE_1_SIZE;
+// Define the two phases - adjust based on actual whitelist size
+export const PHASE_1_SIZE = Math.min(75, whitelist.length);
+export const PHASE_2_SIZE = Math.max(0, whitelist.length - PHASE_1_SIZE);
 
 // Phase 1 details
 export const PHASE_1_DATE = "Monday, 3PM UTC";
