@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { ChakraProvider, Box, VStack, Input, Button, Text, Container, Heading, useToast } from '@chakra-ui/react'
 import axios from 'axios'
+import AdminPage from './AdminPage'
 
 // Brand colors from the website
 const theme = {
@@ -16,6 +17,17 @@ const theme = {
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
 
 function App() {
+  // Check if we're on the admin page
+  const isAdminPage = window.location.pathname === '/admin'
+
+  if (isAdminPage) {
+    return (
+      <ChakraProvider>
+        <AdminPage />
+      </ChakraProvider>
+    )
+  }
+
   const [walletAddress, setWalletAddress] = useState('')
   const [isChecking, setIsChecking] = useState(false)
   const toast = useToast()
