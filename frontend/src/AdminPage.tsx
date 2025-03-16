@@ -1,32 +1,50 @@
-import { Box, VStack, Text, Heading, Link, Code, OrderedList, ListItem, Tabs, TabList, TabPanels, Tab, TabPanel, Button } from '@chakra-ui/react';
+import { Box, VStack, Text, Heading, Link, Code, OrderedList, ListItem, Tabs, TabList, TabPanels, Tab, TabPanel, Button, Flex } from '@chakra-ui/react';
 import whitelist from './whitelist.json';
 
 function AdminPage() {
     return (
-        <Box minH="100vh" bg="#4B0082" py={10}>
-            <VStack spacing={8} maxW="container.md" mx="auto" px={4}>
-                <Box textAlign="center" color="white">
-                    <Heading size="xl">Admin Instructions</Heading>
+        <Flex
+            direction="column"
+            minH="100vh"
+            w="100%"
+            bg="#4B0082"
+            overflow="hidden"
+        >
+            <Flex
+                direction="column"
+                minH="100vh"
+                w="100%"
+                p={{ base: 4, md: 10 }}
+            >
+                <Box textAlign="center" color="white" mb={{ base: 4, md: 8 }}>
+                    <Heading size={{ base: "lg", md: "xl" }}>Admin Instructions</Heading>
                     <Text mt={2}>How to Update the Whitelist</Text>
                     <Text mt={2} fontSize="lg">Current Whitelist Size: {whitelist.length} addresses</Text>
                 </Box>
 
-                <Box bg="white" p={8} borderRadius="lg" w="full">
-                    <Tabs colorScheme="pink" variant="enclosed">
-                        <TabList>
-                            <Tab>Basic Instructions</Tab>
-                            <Tab>Multiple CSV Files</Tab>
-                            <Tab>Current Format</Tab>
+                <Box
+                    bg="white"
+                    p={{ base: 4, md: 8 }}
+                    borderRadius="lg"
+                    w="full"
+                    flex="1"
+                    overflowY="auto"
+                >
+                    <Tabs colorScheme="pink" variant="enclosed" size={{ base: "sm", md: "md" }}>
+                        <TabList overflowX="auto" flexWrap={{ base: "nowrap", md: "wrap" }}>
+                            <Tab whiteSpace="nowrap">Basic Instructions</Tab>
+                            <Tab whiteSpace="nowrap">Multiple CSV Files</Tab>
+                            <Tab whiteSpace="nowrap">Current Format</Tab>
                         </TabList>
 
                         <TabPanels>
                             <TabPanel>
-                                <VStack spacing={6} align="start">
-                                    <Text fontSize="lg" fontWeight="bold">
+                                <VStack spacing={{ base: 4, md: 6 }} align="start">
+                                    <Text fontSize={{ base: "md", md: "lg" }} fontWeight="bold">
                                         To update the whitelist, follow these steps:
                                     </Text>
 
-                                    <OrderedList spacing={4} pl={4}>
+                                    <OrderedList spacing={{ base: 2, md: 4 }} pl={4}>
                                         <ListItem>
                                             <Text fontWeight="bold">Prepare your CSV file</Text>
                                             <Text>Create a CSV file with wallet addresses in the first column (one per row)</Text>
@@ -59,8 +77,8 @@ function AdminPage() {
                             </TabPanel>
 
                             <TabPanel>
-                                <VStack spacing={6} align="start">
-                                    <Text fontSize="lg" fontWeight="bold">
+                                <VStack spacing={{ base: 4, md: 6 }} align="start">
+                                    <Text fontSize={{ base: "md", md: "lg" }} fontWeight="bold">
                                         Working with Multiple CSV Files:
                                     </Text>
 
@@ -93,8 +111,8 @@ function AdminPage() {
                             </TabPanel>
 
                             <TabPanel>
-                                <VStack spacing={6} align="start">
-                                    <Text fontSize="lg" fontWeight="bold">
+                                <VStack spacing={{ base: 4, md: 6 }} align="start">
+                                    <Text fontSize={{ base: "md", md: "lg" }} fontWeight="bold">
                                         Current Whitelist Format:
                                     </Text>
 
@@ -102,9 +120,9 @@ function AdminPage() {
                                         The current whitelist is using a format where each address is in an array with an empty string:
                                     </Text>
 
-                                    <Box p={4} bg="gray.100" borderRadius="md" w="full">
+                                    <Box p={4} bg="gray.100" borderRadius="md" w="full" overflowX="auto">
                                         <Text fontWeight="bold">Current format:</Text>
-                                        <Code p={2} mt={2} display="block" whiteSpace="pre" overflowX="auto">
+                                        <Code p={2} mt={2} display="block" whiteSpace="pre" fontSize={{ base: "xs", md: "sm" }}>
                                             {`[
   ["0x123456789abcdef0123456789abcdef01234567", ""],
   ["0xabcdef0123456789abcdef0123456789abcdef01", ""]
@@ -119,7 +137,7 @@ function AdminPage() {
                                     <Box p={4} bg="gray.50" borderRadius="md" w="full">
                                         <Text fontWeight="bold">Option 1: Match the current format</Text>
                                         <Text mt={2}>Make sure your CSV has two columns, with the second column empty:</Text>
-                                        <Code p={2} mt={2} display="block" whiteSpace="pre">
+                                        <Code p={2} mt={2} display="block" whiteSpace="pre" fontSize={{ base: "xs", md: "sm" }}>
                                             {`0x123456789abcdef0123456789abcdef01234567,
 0xabcdef0123456789abcdef0123456789abcdef01,`}
                                         </Code>
@@ -128,7 +146,7 @@ function AdminPage() {
                                     <Box p={4} bg="gray.50" borderRadius="md" w="full">
                                         <Text fontWeight="bold">Option 2: Use simple format (also supported)</Text>
                                         <Text mt={2}>You can also use a simpler format with just the addresses:</Text>
-                                        <Code p={2} mt={2} display="block" whiteSpace="pre">
+                                        <Code p={2} mt={2} display="block" whiteSpace="pre" fontSize={{ base: "xs", md: "sm" }}>
                                             {`[
   "0x123456789abcdef0123456789abcdef01234567",
   "0xabcdef0123456789abcdef0123456789abcdef01"
@@ -143,14 +161,14 @@ function AdminPage() {
 
                     <Box mt={6} textAlign="center">
                         <Link href="/" _hover={{ textDecoration: 'none' }}>
-                            <Button colorScheme="pink">
+                            <Button colorScheme="pink" size={{ base: "md", md: "lg" }}>
                                 Return to Whitelist Checker
                             </Button>
                         </Link>
                     </Box>
                 </Box>
-            </VStack>
-        </Box>
+            </Flex>
+        </Flex>
     );
 }
 

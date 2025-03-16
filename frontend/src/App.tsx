@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ChakraProvider, Box, VStack, Input, Button, Text, Container, Heading, useToast } from '@chakra-ui/react'
+import { ChakraProvider, Box, VStack, Input, Button, Text, Container, Heading, useToast, Flex } from '@chakra-ui/react'
 import AdminPage from './AdminPage'
 import whitelist from './whitelist.json'
 
@@ -72,10 +72,27 @@ function App() {
 
   return (
     <ChakraProvider>
-      <Box minH="100vh" bg={theme.colors.brand.background} py={10}>
-        <Container maxW="container.md">
-          <VStack spacing={8} align="stretch">
-            <Box textAlign="center" color="white">
+      <Flex
+        direction="column"
+        minH="100vh"
+        w="100%"
+        bg={theme.colors.brand.background}
+        overflow="hidden"
+      >
+        <Flex
+          direction={{ base: "column", md: "row" }}
+          minH="100vh"
+          w="100%"
+        >
+          {/* Left side - Fixed width on desktop, full width on mobile */}
+          <Flex
+            direction="column"
+            w={{ base: "100%", md: "370px" }}
+            minH={{ base: "auto", md: "100vh" }}
+            p={6}
+            borderRight={{ base: "none", md: "1px solid rgba(255,255,255,0.1)" }}
+          >
+            <Box textAlign="center" color="white" mb={8}>
               <Heading size="2xl" mb={4}>The 10K Squad</Heading>
               <Text fontSize="xl">Whitelist Checker</Text>
               <Text fontSize="sm" mt={2}>Total addresses: {whitelist.length}</Text>
@@ -83,7 +100,7 @@ function App() {
 
             {/* Space for artwork */}
             <Box
-              h="200px"
+              h={{ base: "150px", md: "200px" }}
               bg="rgba(255,255,255,0.1)"
               borderRadius="lg"
               mb={8}
@@ -92,11 +109,17 @@ function App() {
               alignItems="center"
               overflow="hidden"
             >
-              {/* You can add your artwork here */}
               <Text color="white" fontSize="lg">Your artwork will go here</Text>
             </Box>
 
-            <Box bg="white" p={8} borderRadius="lg" boxShadow="xl">
+            <Box
+              bg="white"
+              p={6}
+              borderRadius="lg"
+              boxShadow="xl"
+              mt="auto"
+              mb={{ base: 6, md: 0 }}
+            >
               <VStack spacing={4}>
                 <Input
                   placeholder="Enter your EVM wallet address"
@@ -117,9 +140,20 @@ function App() {
                 </Button>
               </VStack>
             </Box>
-          </VStack>
-        </Container>
-      </Box>
+          </Flex>
+
+          {/* Right side - Flexible width on desktop, hidden on mobile */}
+          <Flex
+            flex={1}
+            display={{ base: "none", md: "flex" }}
+            justifyContent="center"
+            alignItems="center"
+            p={8}
+          >
+            {/* You can add additional content here for desktop view */}
+          </Flex>
+        </Flex>
+      </Flex>
     </ChakraProvider>
   )
 }
