@@ -1,7 +1,7 @@
 import whitelist from './whitelist.json';
 
-// Define the two phases - adjust based on actual whitelist size
-export const PHASE_1_SIZE = Math.min(75, whitelist.length);
+// Define the two phases - Phase 1 has 4995 wallets, Phase 2 has the rest
+export const PHASE_1_SIZE = Math.min(4995, whitelist.length);
 export const PHASE_2_SIZE = Math.max(0, whitelist.length - PHASE_1_SIZE);
 
 // Phase 1 details
