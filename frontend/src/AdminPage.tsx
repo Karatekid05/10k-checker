@@ -1,7 +1,110 @@
-import { Box, VStack, Text, Heading, Link, Code, OrderedList, ListItem, Tabs, TabList, TabPanels, Tab, TabPanel, Button } from '@chakra-ui/react';
+import { useState } from 'react';
+import { Box, VStack, Text, Heading, Link, Code, OrderedList, ListItem, Tabs, TabList, TabPanels, Tab, TabPanel, Button, Input, FormControl, FormLabel, useToast } from '@chakra-ui/react';
 import whitelist from './whitelist.json';
 
 function AdminPage() {
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [password, setPassword] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const toast = useToast();
+
+    // The password is hardcoded here - in a real app, you'd use a more secure approach
+    const correctPassword = "10kSquad2024";
+
+    const handleLogin = () => {
+        setIsLoading(true);
+
+        // Simulate a slight delay for better UX
+        setTimeout(() => {
+            if (password === correctPassword) {
+                setIsAuthenticated(true);
+                toast({
+                    title: "Login successful",
+                    status: "success",
+                    duration: 3000,
+                    isClosable: true,
+                });
+            } else {
+                toast({
+                    title: "Incorrect password",
+                    status: "error",
+                    duration: 3000,
+                    isClosable: true,
+                });
+            }
+            setIsLoading(false);
+        }, 500);
+    };
+
+    // Login screen
+    if (!isAuthenticated) {
+        return (
+            <Box
+                minH="100vh"
+                w="100%"
+                bg="#4B0082"
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                py={8}
+            >
+                <Box
+                    w={{ base: "90%", md: "400px" }}
+                    maxW="500px"
+                    bg="rgba(255,255,255,0.05)"
+                    borderRadius="xl"
+                    overflow="hidden"
+                    boxShadow="0 4px 30px rgba(0, 0, 0, 0.1)"
+                    backdropFilter="blur(5px)"
+                    border="1px solid rgba(255, 255, 255, 0.1)"
+                    p={6}
+                >
+                    <VStack spacing={6}>
+                        <Heading size="lg" color="white">Admin Login</Heading>
+
+                        <Box
+                            bg="white"
+                            p={5}
+                            borderRadius="lg"
+                            w="100%"
+                            boxShadow="md"
+                        >
+                            <VStack spacing={4}>
+                                <FormControl>
+                                    <FormLabel>Password</FormLabel>
+                                    <Input
+                                        type="password"
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        onKeyPress={(e) => {
+                                            if (e.key === 'Enter') {
+                                                handleLogin();
+                                            }
+                                        }}
+                                    />
+                                </FormControl>
+
+                                <Button
+                                    colorScheme="pink"
+                                    width="full"
+                                    onClick={handleLogin}
+                                    isLoading={isLoading}
+                                >
+                                    Login
+                                </Button>
+
+                                <Link href="/" color="blue.500" alignSelf="center">
+                                    Return to Whitelist Checker
+                                </Link>
+                            </VStack>
+                        </Box>
+                    </VStack>
+                </Box>
+            </Box>
+        );
+    }
+
+    // Admin content (only shown after authentication)
     return (
         <Box
             minH="100vh"
