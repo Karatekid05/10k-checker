@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: 10k-checker-backend
+    env: node
+    buildCommand: cd server && npm install
+    startCommand: cd server && npm start
+    envVars:
+      - key: PORT
+        value: 3001
+      - key: ALLOWED_ORIGINS
+        value: https://10k-checker-59wwbwjkp-karatekid05s-projects.vercel.app
+      - key: NODE_ENV
+        value: production 

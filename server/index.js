@@ -11,7 +11,7 @@ const upload = multer({ dest: 'uploads/' });
 // Configure CORS for production
 const allowedOrigins = process.env.ALLOWED_ORIGINS 
   ? process.env.ALLOWED_ORIGINS.split(',') 
-  : ['http://localhost:5173'];
+  : ['http://localhost:5173', 'https://10k-checker-59wwbwjkp-karatekid05s-projects.vercel.app'];
 
 app.use(cors({
   origin: function(origin, callback) {
@@ -106,12 +106,17 @@ app.get('/health', (req, res) => {
   res.json({ status: 'healthy', whitelistSize: whitelistedAddresses.size });
 });
 
+// Root endpoint
+app.get('/', (req, res) => {
+  res.json({ message: '10K Squad Whitelist Checker API' });
+});
+
 // Create uploads directory if it doesn't exist
 if (!fs.existsSync('uploads')) {
     fs.mkdirSync('uploads');
 }
 
 const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server running on port ${PORT}`);
 }); 
