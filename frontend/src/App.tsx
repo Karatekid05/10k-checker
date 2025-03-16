@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ChakraProvider, Box, VStack, Input, Button, Text, Container, Heading, useToast } from '@chakra-ui/react'
+import { ChakraProvider, Box, VStack, Input, Button, Text, Container, Heading, useToast, Image } from '@chakra-ui/react'
 import AdminPage from './AdminPage'
 import whitelist from './whitelist.json'
 
@@ -46,9 +46,16 @@ function App() {
 
     // Check if the wallet is in the whitelist
     const normalizedAddress = walletAddress.toLowerCase().trim()
-    const isWhitelisted = whitelist.some((address: string) =>
-      address.toLowerCase() === normalizedAddress
-    )
+
+    // Handle both formats: simple array of strings or array of arrays
+    const isWhitelisted = whitelist.some((item: any) => {
+      // If item is an array (like ["0x123...", ""]), check the first element
+      if (Array.isArray(item)) {
+        return item[0].toLowerCase() === normalizedAddress
+      }
+      // If item is a string, check directly
+      return typeof item === 'string' && item.toLowerCase() === normalizedAddress
+    })
 
     toast({
       title: isWhitelisted ? 'Congratulations!' : 'Not Found',
@@ -71,11 +78,22 @@ function App() {
             <Box textAlign="center" color="white">
               <Heading size="2xl" mb={4}>The 10K Squad</Heading>
               <Text fontSize="xl">Whitelist Checker</Text>
+              <Text fontSize="sm" mt={2}>Total addresses: {whitelist.length}</Text>
             </Box>
 
             {/* Space for artwork */}
-            <Box h="200px" bg="rgba(255,255,255,0.1)" borderRadius="lg" mb={8}>
-              {/* Art will go here */}
+            <Box
+              h="200px"
+              bg="rgba(255,255,255,0.1)"
+              borderRadius="lg"
+              mb={8}
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              overflow="hidden"
+            >
+              {/* You can add your artwork here */}
+              <Text color="white" fontSize="lg">Your artwork will go here</Text>
             </Box>
 
             <Box bg="white" p={8} borderRadius="lg" boxShadow="xl">
