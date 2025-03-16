@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ChakraProvider, Box, VStack, Input, Button, Text, Container, Heading, useToast, Flex } from '@chakra-ui/react'
+import { ChakraProvider, Box, VStack, Input, Button, Text, Heading, useToast, Flex } from '@chakra-ui/react'
 import AdminPage from './AdminPage'
 import whitelist from './whitelist.json'
 
