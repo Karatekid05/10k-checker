@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { ChakraProvider, Box, VStack, Input, Button, Text, Container, Heading, useToast } from '@chakra-ui/react'
-import axios from 'axios'
 import AdminPage from './AdminPage'
+import whitelist from './whitelist.json'
 
 // Brand colors from the website
 const theme = {
@@ -13,8 +13,6 @@ const theme = {
     },
   },
 }
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
 
 function App() {
   // Check if we're on the admin page
@@ -45,29 +43,23 @@ function App() {
     }
 
     setIsChecking(true)
-    try {
-      const response = await axios.post(`${API_URL}/check-wallet`, {
-        walletAddress,
-      })
+    
+    // Check if the wallet is in the whitelist
+    const normalizedAddress = walletAddress.toLowerCase().trim()
+    const isWhitelisted = whitelist.some(address => 
+      address.toLowerCase() === normalizedAddress
+    )
 
-      toast({
-        title: response.data.isWhitelisted ? 'Congratulations!' : 'Not Found',
-        description: response.data.isWhitelisted
-          ? 'Your wallet is whitelisted!'
-          : 'Your wallet is not on the whitelist.',
-        status: response.data.isWhitelisted ? 'success' : 'info',
-        duration: 5000,
-        isClosable: true,
-      })
-    } catch (error) {
-      toast({
-        title: 'Error',
-        description: 'Failed to check wallet status',
-        status: 'error',
-        duration: 3000,
-        isClosable: true,
-      })
-    }
+    toast({
+      title: isWhitelisted ? 'Congratulations!' : 'Not Found',
+      description: isWhitelisted
+        ? 'Your wallet is whitelisted!'
+        : 'Your wallet is not on the whitelist.',
+      status: isWhitelisted ? 'success' : 'info',
+      duration: 5000,
+      isClosable: true,
+    })
+    
     setIsChecking(false)
   }
 
