@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Box, VStack, Text, Heading, Link, Code, OrderedList, ListItem, Tabs, TabList, TabPanels, Tab, TabPanel, Button, Input, FormControl, FormLabel, useToast } from '@chakra-ui/react';
 import whitelist from './whitelist.json';
+import { PHASE_1_SIZE, PHASE_2_SIZE, PHASE_1_DATE, PHASE_2_DATE } from './whitelistPhases';
 
 function AdminPage() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -130,6 +131,8 @@ function AdminPage() {
                         <Heading size={{ base: "lg", md: "xl" }}>Admin Instructions</Heading>
                         <Text mt={2}>How to Update the Whitelist</Text>
                         <Text mt={2} fontSize="md">Current Whitelist Size: {whitelist.length} addresses</Text>
+                        <Text mt={1} fontSize="sm">Phase 1: {PHASE_1_SIZE} addresses (Minting on {PHASE_1_DATE})</Text>
+                        <Text mt={1} fontSize="sm">Phase 2: {PHASE_2_SIZE} addresses (Minting on {PHASE_2_DATE})</Text>
                     </Box>
 
                     <Box

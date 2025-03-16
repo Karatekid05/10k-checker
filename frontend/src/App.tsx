@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { ChakraProvider, Box, VStack, Input, Button, Text, Heading, useToast, Image } from '@chakra-ui/react'
 import AdminPage from './AdminPage'
 import whitelist from './whitelist.json'
+import { checkWhitelistPhase, getWhitelistMessage, PHASE_1_SIZE, PHASE_2_SIZE } from './whitelistPhases'
 
 // Brand colors from the website
 const theme = {
@@ -44,23 +45,15 @@ function App() {
 
     setIsChecking(true)
 
-    // Check if the wallet is in the whitelist
-    const normalizedAddress = walletAddress.toLowerCase().trim()
-
-    // Handle both formats: simple array of strings or array of arrays
-    const isWhitelisted = whitelist.some((item: any) => {
-      // If item is an array (like ["0x123...", ""]), check the first element
-      if (Array.isArray(item)) {
-        return item[0].toLowerCase() === normalizedAddress
-      }
-      // If item is a string, check directly
-      return typeof item === 'string' && item.toLowerCase() === normalizedAddress
-    })
+    // Check which phase the wallet belongs to
+    const phase = checkWhitelistPhase(walletAddress)
+    const message = getWhitelistMessage(walletAddress)
+    const isWhitelisted = phase !== null
 
     toast({
       title: isWhitelisted ? 'Congratulations!' : 'Not Found',
       description: isWhitelisted
-        ? 'Your wallet is whitelisted!'
+        ? message
         : 'Your wallet is not on the whitelist.',
       status: isWhitelisted ? 'success' : 'info',
       duration: 5000,
@@ -95,6 +88,7 @@ function App() {
               <Heading size="xl" mb={2}>The 10K Squad</Heading>
               <Text fontSize="lg">Whitelist Checker</Text>
               <Text fontSize="sm" mt={1}>Total addresses: {whitelist.length}</Text>
+              <Text fontSize="xs" mt={1}>Phase 1: {PHASE_1_SIZE} addresses | Phase 2: {PHASE_2_SIZE} addresses</Text>
             </Box>
 
             {/* Space for artwork */}
