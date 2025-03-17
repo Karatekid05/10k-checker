@@ -1,8 +1,8 @@
 import whitelist from './whitelist.json';
 
-// Define the two phases - Phase 1 has 4995 wallets, Phase 2 has the rest
-export const PHASE_1_SIZE = Math.min(4995, whitelist.length);
-export const PHASE_2_SIZE = Math.max(0, whitelist.length - PHASE_1_SIZE);
+// Define the two phases with fixed sizes
+export const PHASE_1_SIZE = Math.min(5000, whitelist.length);
+export const PHASE_2_SIZE = Math.min(4500, Math.max(0, whitelist.length - PHASE_1_SIZE));
 
 // Phase 1 details
 export const PHASE_1_DATE = "Monday, 3PM UTC";
@@ -30,7 +30,15 @@ export const checkWhitelistPhase = (walletAddress: string): number | null => {
     if (index === -1) return null;
 
     // Determine the phase based on the index
-    return index < PHASE_1_SIZE ? 1 : 2;
+    // First 5000 addresses are Phase 1, next 4500 are Phase 2
+    if (index < PHASE_1_SIZE) {
+        return 1;
+    } else if (index < PHASE_1_SIZE + PHASE_2_SIZE) {
+        return 2;
+    } else {
+        // If more than 9500 addresses, they're not in any phase
+        return null;
+    }
 };
 
 // Function to get the message for a wallet
