@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { ChakraProvider, Box, VStack, Input, Button, Text, Heading, useToast, Image } from '@chakra-ui/react'
 import AdminPage from './AdminPage'
 import whitelist from './whitelist.json'
@@ -29,33 +29,7 @@ function App() {
 
   const [walletAddress, setWalletAddress] = useState('')
   const [isChecking, setIsChecking] = useState(false)
-  const [debugInfo, setDebugInfo] = useState('')
   const toast = useToast()
-
-  // Function to help debug specific wallet addresses
-  useEffect(() => {
-    const checkSpecificAddress = async () => {
-      const testAddress = '0xB935979B27912f8453760f55E4fCE4A7b5674150';
-      const normalizedAddress = testAddress.toLowerCase().trim();
-
-      // Check if the address is in the whitelist
-      const index = whitelist.findIndex((item: any) => {
-        if (Array.isArray(item)) {
-          return item[0].toLowerCase() === normalizedAddress;
-        }
-        return typeof item === 'string' && item.toLowerCase() === normalizedAddress;
-      });
-
-      const phase = checkWhitelistPhase(testAddress);
-
-      setDebugInfo(`Test address ${testAddress} is at index ${index}, phase: ${phase}`);
-      console.log(`Test address ${testAddress} is at index ${index}, phase: ${phase}`);
-      console.log(`PHASE_1_SIZE: ${PHASE_1_SIZE}, PHASE_2_SIZE: ${PHASE_2_SIZE}`);
-      console.log(`whitelist length: ${whitelist.length}`);
-    };
-
-    checkSpecificAddress();
-  }, []);
 
   const checkWallet = async () => {
     if (!walletAddress) {
@@ -70,14 +44,6 @@ function App() {
     }
 
     setIsChecking(true)
-
-    // Log the whitelist structure for debugging
-    console.log(`Whitelist type: ${typeof whitelist}`);
-    console.log(`Whitelist length: ${whitelist.length}`);
-    if (whitelist.length > 0) {
-      console.log(`First item type: ${typeof whitelist[0]}`);
-      console.log(`First item: ${JSON.stringify(whitelist[0])}`);
-    }
 
     // Check which phase the wallet belongs to
     const phase = checkWhitelistPhase(walletAddress)
@@ -124,13 +90,6 @@ function App() {
               <Text fontSize="sm" mt={1}>Total addresses: {whitelist.length}</Text>
               <Text fontSize="xs" mt={1}>Phase 1: {PHASE_1_SIZE} addresses | Phase 2: {PHASE_2_SIZE} addresses</Text>
             </Box>
-
-            {/* Add debug info for development */}
-            {debugInfo && (
-              <Text fontSize="xs" color="white" mt={2} opacity={0.8}>
-                Debug: {debugInfo}
-              </Text>
-            )}
 
             {/* Space for artwork */}
             <Box

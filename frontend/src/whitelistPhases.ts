@@ -29,8 +29,6 @@ export const checkWhitelistPhase = (walletAddress: string): number | null => {
     // If not found, return null
     if (index === -1) return null;
 
-    console.log(`Found wallet at index ${index}`);
-
     // Determine the phase based on the index
     // First 5000 addresses are Phase 1, next 4500 are Phase 2
     if (index < PHASE_1_SIZE) {
